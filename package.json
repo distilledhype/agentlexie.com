@@ -1,0 +1,25 @@
+{
+  "name": "agentlexie.com",
+  "version": "1.0.0",
+  "description": "Agent Lexie Website",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/distilledhype/agentlexie.com"
+  },
+  "author": "Kahlil Lechelt",
+  "license": "All rights reserved.",
+  "bugs": {
+    "url": "https://github.com/distilledhype/agentlexie.com/issues"
+  },
+  "homepage": "http://agentlexie.com",
+  "scripts": {
+    "start": "npm run sassw & npm run livereload",
+    "sass": "sass assets/scss/main.scss assets/css/main.css",
+    "sassw": "sass --watch assets/scss:assets/css",
+    "livereload": "livereload .",
+    "watch-js": "watchify assets/js/src/main.js -o assets/js/build/agentlexie.js -dv"
+  },
+  "devDependencies": {
+    "pjax": "^0.1.4"
+  }
+}
