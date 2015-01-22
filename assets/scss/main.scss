@@ -6,6 +6,10 @@
 // Import modules
 @import "modules/nav";
 
+// Animate.css
+@import "util/animate";
+
+
 body {
   margin: 0;
 }
@@ -48,7 +52,7 @@ body {
 
 // Menu
 .menu {
-  background: #bada55;
+  background: green;
 
   li {
     display: inline-block;

@@ -13,13 +13,19 @@
   },
   "homepage": "http://agentlexie.com",
   "scripts": {
-    "start": "npm run sassw & npm run livereload",
+    "start": "npm run open & npm run sassw & npm run jsw & npm run livereload",
     "sass": "sass assets/scss/main.scss assets/css/main.css",
     "sassw": "sass --watch assets/scss:assets/css",
-    "livereload": "livereload .",
-    "watch-js": "watchify assets/js/src/main.js -o assets/js/build/agentlexie.js -dv"
+    "livereload": "live-reload --port 9091 .",
+    "jsw": "watchify assets/js/src/main.js -o assets/js/build/agentlexie.js -dv",
+    "open": "opener http://agentlexie.dev:8888"
   },
   "devDependencies": {
-    "pjax": "^0.1.4"
+    "live-reload": "^0.2.0",
+    "properjs-pushstate": "^0.1.1",
+    "velocity-animate": "^1.2.1"
+  },
+  "dependencies": {
+    "jquery": "^2.1.3"
   }
 }

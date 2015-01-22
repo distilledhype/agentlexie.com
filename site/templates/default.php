@@ -1,19 +1,19 @@
-<?php snippet('header') ?>
+<?php $headers = getallheaders(); ?>
+<?php if (isset($headers['X-PJAX'])): ?>
+  <?php snippet('pjax', array('bgalias' => $page->bgalias())) ?>
+<?php else: ?>
+  <?php snippet('header') ?>
 
-  <main class="main" role="main">
+    <main class="main" role="main">
 
-    <!-- <div class="text">
-      <h1><?php echo $page->title()->html() ?></h1>
-      <?php echo $page->text()->kirbytext() ?>
-    </div> -->
-
-    <div class="content">
-      <div class="pages">
-        <div class="page bg-<?php echo $page->bgalias() ?>"></div>
+      <div class="content">
+        <div class="js-Pjax pages" id="js-Pjax">
+          <?php snippet('pjax', array('bgalias' => $page->bgalias())) ?>
+        </div>
+        <?php snippet('menu') ?>
       </div>
-      <?php snippet('menu') ?>
-    </div>
 
-  </main>
+    </main>
 
-<?php snippet('footer') ?>
+  <?php snippet('footer') ?>
+<?php endif; ?>

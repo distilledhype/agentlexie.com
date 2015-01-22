@@ -14,7 +14,10 @@
   <?php echo css('assets/css/main.css') ?>
 
   <!-- JavaScript -->
-  <?php echo js('assets/js/vendor/modernizr/modernizr.js') ?>
+  <?php echo js('bower_components/modernizr/modernizr.js') ?>
+
+  <!-- live-reload -->
+  <script src="//localhost:9091"></script>
 </head>
 
 <body>
