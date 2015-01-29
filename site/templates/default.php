@@ -8,7 +8,9 @@
 
       <div class="content">
         <div class="js-Pjax pages" id="js-Pjax">
-          <?php snippet('pjax', array('bgalias' => $page->bgalias())) ?>
+          <?php // snippet('pjax', array('bgalias' => $page->bgalias())) ?>
+          <div class="js-Pjax-child page bg-home"></div>
+          <div class="js-Pjax-child page bg-projects"></div>
         </div>
         <?php snippet('menu') ?>
       </div>
