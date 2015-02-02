@@ -2,11 +2,11 @@ Title: Music
 
 ----
 
-BgAlias: music
+route: music
 
 ----
 
-bgimage: home.jpg
+image: home.jpg
 
 ----
 

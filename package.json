@@ -21,6 +21,7 @@
     "open": "opener http://agentlexie.dev:8888"
   },
   "devDependencies": {
+    "URIjs": "^1.14.1",
     "live-reload": "^0.2.0",
     "properjs-pushstate": "^0.1.1",
     "velocity-animate": "^1.2.1"
