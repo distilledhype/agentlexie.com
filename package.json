@@ -18,12 +18,15 @@
     "sassw": "sass --watch assets/scss:assets/css",
     "livereload": "live-reload --port 9091 .",
     "jsw": "watchify assets/js/src/main.js -o assets/js/build/agentlexie.js -dv",
+    "jsmin": "browserify assets/js/src/main.js | uglifyjs -mc > assets/js/build/agentlexie.min.js",
     "open": "opener http://agentlexie.dev:8888"
   },
   "devDependencies": {
     "URIjs": "^1.14.1",
+    "flightjs": "^1.5.0",
     "live-reload": "^0.2.0",
     "properjs-pushstate": "^0.1.1",
+    "uglify-js": "^2.4.16",
     "velocity-animate": "^1.2.1"
   },
   "dependencies": {

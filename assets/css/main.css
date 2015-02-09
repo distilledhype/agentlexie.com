@@ -2800,6 +2800,7 @@ body {
     position: relative; }
 
 .submenu {
+  z-index: 3;
   display: none;
   position: absolute;
   bottom: 3rem; }
