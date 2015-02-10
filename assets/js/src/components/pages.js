@@ -53,7 +53,7 @@ function pages() {
   function insertXhrHtml(html) {
     // Append the result to this node.
     this.$node.append(html);
-    _.delay(this.animateContent.bind(this), 100);
+    _.delay(this.animateContent.bind(this), 90);
   }
 
   /**

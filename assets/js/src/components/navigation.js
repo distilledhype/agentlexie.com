@@ -19,10 +19,11 @@ function navigation() {
 
   function onNavClick(event) {
     var url = $(event.target).attr('href');
-    var data = {url: url};
+    var data = { url: url };
     var route = URI(url).path();
 
     this.navigate(route);
+    
     event.preventDefault();
   }
 }

@@ -7,3 +7,4 @@ node_modules
 npm-debug.*
 bower_components
 assets/css/*.css
+assets/js/build/*.js
