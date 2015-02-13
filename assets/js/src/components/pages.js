@@ -52,6 +52,7 @@ function pages() {
    */
   function insertXhrHtml(html) {
     // Append the result to this node.
+    this.trigger('page.transition.inc');
     this.$node.append(html);
     _.delay(this.animateContent.bind(this), 90);
   }
@@ -87,5 +88,7 @@ function pages() {
       .find('.next')
         .removeClass('next')
         .addClass('current');
+
+    this.trigger(document, 'page.transition.done');
   }
 }

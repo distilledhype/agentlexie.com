@@ -7,6 +7,7 @@ global.Velocity.UI = require('../../../node_modules/velocity-animate/velocity.ui
 var Navigation = require('./components/navigation');
 var Pages = require('./components/pages');
 var Routing = require('./components/routing');
+var NProgress = require('./components/nprogress');
 
 module.exports = { kickoff: kickoff };
 module.exports.kickoff();
@@ -17,4 +18,5 @@ function kickoff() {
   Navigation.attachTo('nav');
   Pages.attachTo('.pages');
   Routing.attachTo(document.body);
+  NProgress.attachTo(document.body);
 }

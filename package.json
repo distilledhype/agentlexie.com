@@ -26,6 +26,7 @@
     "flightjs": "^1.5.0",
     "live-reload": "^0.2.0",
     "lodash": "^3.1.0",
+    "nprogress": "^0.1.6",
     "properjs-pushstate": "^0.1.1",
     "uglify-js": "^2.4.16",
     "velocity-animate": "^1.2.1"

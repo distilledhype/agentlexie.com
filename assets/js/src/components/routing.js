@@ -6,7 +6,7 @@ module.exports = flight.component(routing, router);
 function routing() {
   this.loadPage = function(route) {
     this.trigger('route.change', route);
-    console.log(route);
+    this.trigger('page.transition.start');
   };
 
   this.loadSubPage = function(routes) {
@@ -15,6 +15,7 @@ function routing() {
     };
 
     this.trigger('route.change', eventRoute);
+    this.trigger('page.transition.start');
   };
 
   this.after('initialize', function() {
