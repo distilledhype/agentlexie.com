@@ -4,8 +4,8 @@
 @import "vendor/neat/neat";
 @import "vendor/nprogress/nprogress";
 
-// Import modules
-@import "modules/nav";
+// Import components
+@import "components/nav";
 
 // Animate.css
 @import "util/animate";
@@ -64,33 +64,4 @@ body {
 }
 [data-route="music"] {
   background-image: url(../images/03.jpg);
-}
-
-
-// Menu
-.menu {
-  background: green;
-
-  li {
-    display: inline-block;
-    height: 100%;
-    height: 3rem;
-    position: relative;
-  }
-}
-
-.submenu {
-  z-index: 3;
-  display: none;
-  position: absolute;
-  bottom: 3rem;
-
-  li {
-    display: block;
-
-  }
-
-  li:hover & {
-    display: block;
-  }
 }
