@@ -1,0 +1,41 @@
+.pages {
+  height: calc(100% - 3rem);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.page {
+  background-repeat: no-repeat;
+  background-position: center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
+}
+
+.current {
+  z-index: 1;
+}
+
+.next {
+  z-index: 2;
+  left: calc(100%);
+}
+
+// Page Backgrounds
+[data-route="home"] {
+  background-image: url(../images/01.jpg);
+}
+[data-route="projects"] {
+  background-image: url(../images/02.jpg);
+}
+[data-route="music"] {
+  background-image: url(../images/03.jpg);
+}

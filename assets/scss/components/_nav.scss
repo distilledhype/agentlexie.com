@@ -8,12 +8,13 @@
 
 // Menu
 .menu {
-  background: #222;
+  background: $black;
 
   li {
     display: inline-block;
     height: 3rem;
     position: relative;
+    padding: 1rem;
   }
 }
 

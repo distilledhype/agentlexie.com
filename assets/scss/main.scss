@@ -1,67 +1,15 @@
+@import "util/vars";
 @import "vendor/normalize/normalize";
 @import "vendor/bourbon/bourbon";
 @import "vendor/base/base";
 @import "vendor/neat/neat";
 @import "vendor/nprogress/nprogress";
+@import "vendor/animate/animate";
 
-// Import components
+@import "base/base";
+
+@import "layout/content";
+@import "layout/pages";
+
+// Components
 @import "components/nav";
-
-// Animate.css
-@import "util/animate";
-
-
-body {
-  margin: 0;
-}
-
-.content {
-  max-width: 1440px;
-  margin: 0 auto;
-  height: 100vh;
-}
-
-.pages {
-  height: calc(100% - 3rem);
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-}
-
-.page {
-  z-index: 0;
-
-  // Background styles.
-  background-repeat: no-repeat;
-  background-position: center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-}
-
-.current {
-  z-index: 1;
-}
-
-.next {
-  z-index: 2;
-  left: calc(100%);
-}
-
-// Page Backgrounds
-[data-route="home"] {
-  background-image: url(../images/01.jpg);
-}
-[data-route="projects"] {
-  background-image: url(../images/02.jpg);
-}
-[data-route="music"] {
-  background-image: url(../images/03.jpg);
-}
