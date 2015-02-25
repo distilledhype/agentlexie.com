@@ -1,5 +1,5 @@
 $nprogress-default-color: #29d;
-$nprogress-agentlexie-color: #e34a84;
+$nprogress-agentlexie-color: $pink;
 
 /* Make clicks pass-through */
 #nprogress {
@@ -15,7 +15,7 @@ $nprogress-agentlexie-color: #e34a84;
   left: 0;
 
   width: 100%;
-  height: 2px;
+  height: 3px;
 }
 
 /* Fancy blur effect */
@@ -47,7 +47,7 @@ $nprogress-agentlexie-color: #e34a84;
   height: 18px;
   box-sizing: border-box;
 
-  border: solid 2px transparent;
+  border: solid 3px transparent;
   border-top-color: $nprogress-agentlexie-color;
   border-left-color: $nprogress-agentlexie-color;
   border-radius: 50%;

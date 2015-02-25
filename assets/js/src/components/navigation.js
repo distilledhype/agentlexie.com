@@ -6,8 +6,8 @@ module.exports = flight.component(navigation, router);
 
 function navigation() {
   this.attributes({
-    navItemSelector: '.navitem',
-    subnavSelector: '.submenu',
+    navItemSelector: '.nav-link',
+    subnavSelector: '.nav.nav__sub',
     activeClassname: 'active'
   });
 

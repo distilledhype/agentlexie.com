@@ -1,35 +1,37 @@
 .nav {
-  height: 3rem;
-
-  li {
-    display: inline;
-  }
-}
-
-// Menu
-.menu {
   background: $black;
+}
 
-  li {
-    display: inline-block;
-    height: 3rem;
-    position: relative;
-    padding: 1rem;
+.nav-item {
+  display: inline-block;
+  height: 4.2rem;
+  position: relative;
+  padding: 1rem;
+}
+
+.nav-link {
+  font-family: 'Montserrat', 'Helvetica Neue';
+  font-size: 2rem;
+  line-height: 2.2rem;
+  text-transform: uppercase;
+  font-weight: 900;
+
+  &:hover {
+    text-shadow: 5px 5px 0px $pink;
   }
 }
 
-.submenu {
+.nav.nav__sub {
   z-index: 3;
   display: none;
   position: absolute;
   bottom: 3rem;
+}
 
-  li {
-    display: block;
+.nav-item:hover .nav.nav__sub {
+  display: block;
+}
 
-  }
-
-  li:hover & {
-    display: block;
-  }
+.nav-item.nav-item__sub {
+  display: block;
 }
