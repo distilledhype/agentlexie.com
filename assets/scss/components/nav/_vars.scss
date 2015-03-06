@@ -1,0 +1,13 @@
+$nav-item-padding-leftright: 1rem;
+$nav-item-padding-top: 1.3rem;
+$nav-item-padding-bottom: 1.1rem;
+
+$nav-font-size: 1.3rem;
+$nav-item-line-height: $nav-font-size;
+
+$nav-background-color: white;
+$nav-text-color: black;
+
+$nav-height: $nav-item-padding-top + $nav-item-padding-bottom + $nav-item-line-height;
+
+$nav-item-skew: 30deg;

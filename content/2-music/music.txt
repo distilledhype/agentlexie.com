@@ -1,8 +1,4 @@
-Title: Projects
-
-----
-
-BgAlias: projects
+Title: Music
 
 ----
 

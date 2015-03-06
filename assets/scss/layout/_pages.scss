@@ -1,8 +1,12 @@
+@import "../components/nav/vars";
+
 .pages {
-  height: calc(100% - 3rem);
+  height: calc(100% - #{$nav-height});
   width: 100%;
   position: relative;
   overflow: hidden;
+
+  text-size: $nav-height;
 }
 
 .page {

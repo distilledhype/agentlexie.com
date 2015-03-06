@@ -1,0 +1,76 @@
+@import 'vars';
+
+nav {
+  position: relative;
+}
+
+.nav {
+  background: $nav-background-color;
+  z-index: 3;
+}
+
+.nav-item {
+  display: inline-block;
+  height: $nav-height;
+  position: relative;
+  float: left;
+  // transform: skew(-#{$nav-item-skew});
+
+  &:after {
+    z-index: 4;
+    content: "|";
+    position: absolute;
+    right: -1px;
+    bottom: $nav-item-padding-bottom - .1rem;
+    color: darken(white, 50%);
+  }
+
+  &:last-child:after {
+    content: "";
+  }
+}
+
+.nav-link {
+  font-family: 'Yanone Kaffeesatz', 'Dosis';
+  font-size: $nav-font-size;
+  line-height: $nav-item-line-height;
+  text-transform: uppercase;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: $nav-text-color;
+  display: block;
+  padding-top: $nav-item-padding-top;
+  padding-right: $nav-item-padding-leftright;
+  padding-bottom: $nav-item-padding-bottom;
+  padding-left: $nav-item-padding-leftright;
+  // transform: skew($nav-item-skew);
+
+  &:visited {
+    color: $nav-text-color;
+  }
+
+  &:hover, &:active {
+    // text-shadow: 5px 5px 0px $pink;
+    color: $pink
+  }
+}
+
+// Sub navigation behavior.
+.nav.nav__sub {
+  z-index: 3;
+  display: none;
+  position: absolute;
+  width: 80rem;
+  bottom: $nav-height - .1;
+  background: transparent;
+}
+.nav-item__sub {
+  z-index: 3;
+}
+.nav-item:hover .nav.nav__sub {
+  display: block;
+}
+.nav-link.nav-link__sub {
+  display: block;
+  background-color: $nav-background-color;
+}

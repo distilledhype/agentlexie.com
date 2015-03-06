@@ -1,0 +1,22 @@
+// Import nav vars to set height.
+@import "../nav/vars";
+
+.player {
+  font-family: 'Yanone Kaffeesatz';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: $nav-height;
+}
+
+.player-progress {
+  width: 20rem;
+  height: 3px;
+}
+
+.player-progress-indicator {
+  height: 3px;
+  display: block;
+  width: 30%;
+  background-color: black;
+}

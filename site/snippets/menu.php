@@ -14,9 +14,9 @@
         <?php endforeach ?>
       </ul>
       <?php endif ?>
-
     </li>
     <?php endforeach ?>
   </ul>
 
+  <?php snippet('player') ?>
 </nav>
