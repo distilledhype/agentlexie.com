@@ -21,6 +21,9 @@
     "jsmin": "browserify assets/js/src/main.js | uglifyjs -mc > assets/js/build/agentlexie.min.js",
     "open": "opener http://agentlexie.dev:8888"
   },
+  "browser": {
+    "soundcloud-sdk": "./assets/js/src/vendor/soundcloud-sdk.js"
+  },
   "devDependencies": {
     "URIjs": "^1.14.1",
     "flightjs": "^1.5.0",
