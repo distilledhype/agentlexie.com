@@ -6,13 +6,16 @@ module.exports = flight.component(player);
 
 function player() {
   var defaultAttrs = {
-    clientId: '5656ba27f714e54289054c57fcc2d319'
+    clientId: null
   };
 
   this.attributes(defaultAttrs);
   this.after('initialize', afterInit);
   this.talkToSoundCloud = talkToSoundCloud;
   this.sound = undefined;
+  this.soundPlay = soundPlay;
+  this.soundStop = soundStop;
+  this.soundPause = soundPause;
 
   //////
 
@@ -29,22 +32,34 @@ function player() {
     this.on('sound.stop', soundStop.bind(this));
     this.on('sound.pause', soundPause.bind(this));
 
-    function soundPlay(e, data) {
-      var trackUrl = data.trackUrl;
+    // Just for testing purposes;
+    this.soundPlay({}, { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
+  }
 
-      this.talkToSoundCloud(trackUrl);
+  /**
+   * Play a SoundCloud sound.
+   */
+  function soundPlay(e, data) {
+    var trackUrl = data.trackUrl;
+
+    this.talkToSoundCloud(trackUrl);
+  }
+
+  /**
+   * Stop a SoundCloud sound.
+   */
+  function soundStop(e, data) {
+    if (this.sound) {
+      this.sound.stop();
     }
+  }
 
-    function soundStop(e, data) {
-      if (this.sound) {
-        this.sound.stop();
-      }
-    }
-
-    function soundPause(e, data) {
-      if (this.sound) {
-        this.sound.pause();
-      }
+  /**
+   * Pause a SoundCloud sound.
+   */
+  function soundPause(e, data) {
+    if (this.sound) {
+      this.sound.pause();
     }
   }
 
@@ -80,7 +95,7 @@ function player() {
      * Receives a sound object on which you can call functions like `play()`, `stop()` and `pause()`.
      */
     function streamSound(sound) {
-      this.sound = sound;
+      this.sound = global.sound = sound;
     }
   }
 }

@@ -32,5 +32,5 @@ function kickoff() {
   Pages.attachTo('.pages');
   Routing.attachTo(document.body);
   NProgress.attachTo(document.body);
-  Player.attachTo('.player');
+  Player.attachTo('.player', { clientId: '5656ba27f714e54289054c57fcc2d319' });
 }
