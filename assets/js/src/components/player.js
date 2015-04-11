@@ -11,13 +11,51 @@ function player() {
 
   this.attributes(defaultAttrs);
   this.after('initialize', afterInit);
-  // this.animateContent = animateContent;
+  this.talkToSoundCloud = talkToSoundCloud;
+  this.sound = undefined;
 
   //////
 
   function afterInit() {
-    SC.initialize({ client_id: this.attr('clientId') });
-    SC.get('/resolve', { url: 'https://soundcloud.com/agentlexie/irule' }, getTrack);
+    /**
+     * Initialize SoundCloud SDK
+     */
+    SC.initialize({ client_id: this.attr.clientId });
+
+    /**
+     * Listen to sound events
+     */
+    this.on('sound.play', soundPlay);
+    this.on('sound.stop', soundStop.bind(this));
+    this.on('sound.pause', soundPause.bind(this));
+
+    function soundPlay(e, data) {
+      var trackUrl = data.trackUrl;
+
+      this.talkToSoundCloud(trackUrl);
+    }
+
+    function soundStop(e, data) {
+      if (this.sound) {
+        this.sound.stop();
+      }
+    }
+
+    function soundPause(e, data) {
+      if (this.sound) {
+        this.sound.pause();
+      }
+    }
+  }
+
+  /**
+   * Use the SoundCloud SDK to get track data and play sounds
+   */
+  function talkToSoundCloud(url) {
+    /**
+     * Get track object from track URL
+     */
+    SC.get('/resolve', { url: url }, getTrack.bind(this));
 
     /**
      * Callback for SC.get
@@ -25,8 +63,7 @@ function player() {
      * The callback receives a track object resolved from the track URL.
      */
     function getTrack(track) {
-      console.log(track);
-      SC.stream('/tracks/' + track.id, { whileplaying: whileplaying }, streamSound);
+      SC.stream('/tracks/' + track.id, { whileplaying: whileplaying }, streamSound.bind(this));
     }
 
     /**
@@ -43,8 +80,7 @@ function player() {
      * Receives a sound object on which you can call functions like `play()`, `stop()` and `pause()`.
      */
     function streamSound(sound) {
-      global.sound = sound;
-      console.log(global.sound);
+      this.sound = sound;
     }
   }
 }
