@@ -1,6 +1,7 @@
 /* global SC */
 
 var flight = require('flightjs');
+var Q = require('q');
 
 module.exports = flight.component(player);
 
@@ -11,11 +12,16 @@ function player() {
 
   this.attributes(defaultAttrs);
   this.after('initialize', afterInit);
-  this.talkToSoundCloud = talkToSoundCloud;
+  // SoundCloud functions.
+  this.getTrack = getTrack;
+  this.getSound = getSound;
+  this.whilePlaying = whilePlaying;
+  // Interact with sounds.
   this.sound = undefined;
   this.soundPlay = soundPlay;
   this.soundStop = soundStop;
   this.soundPause = soundPause;
+  this.waveformUrl = undefined;
 
   //////
 
@@ -28,21 +34,25 @@ function player() {
     /**
      * Listen to sound events
      */
-    this.on('sound.play', soundPlay);
-    this.on('sound.stop', soundStop.bind(this));
-    this.on('sound.pause', soundPause.bind(this));
+    this.on('sound.play', this.soundPlay);
+    this.on('sound.stop', this.soundStop);
+    this.on('sound.pause', this.soundPause);
 
     // Just for testing purposes;
-    this.soundPlay({}, { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
+    this.trigger('sound.play', { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
   }
 
   /**
    * Play a SoundCloud sound.
    */
   function soundPlay(e, data) {
-    var trackUrl = data.trackUrl;
-
-    this.talkToSoundCloud(trackUrl);
+    this.getTrack(data.trackUrl)
+    .then(this.getSound.bind(this))
+    .then(function(sound) {
+      this.sound = global.sound = sound;
+      this.sound.play();
+    }.bind(this))
+    .done();
   }
 
   /**
@@ -66,36 +76,51 @@ function player() {
   /**
    * Use the SoundCloud SDK to get track data and play sounds
    */
-  function talkToSoundCloud(url) {
+  function getTrack(url) {
+    var deferred = Q.defer();
+
     /**
      * Get track object from track URL
      */
-    SC.get('/resolve', { url: url }, getTrack.bind(this));
+    SC.get('/resolve', { url: url }, function getTrackCb(track, err) {
+      if (err) {
+        deferred.reject(new Error(err));
+      } else {
+        deferred.resolve(track);
+      }
+    });
 
-    /**
-     * Callback for SC.get
-     *
-     * The callback receives a track object resolved from the track URL.
-     */
-    function getTrack(track) {
-      SC.stream('/tracks/' + track.id, { whileplaying: whileplaying }, streamSound.bind(this));
-    }
+    return deferred.promise;
+  }
 
-    /**
-     * Callback for the whileplaying method.
-     */
-    function whileplaying() {
-      // Remove loading ani if present.
-      // console.log(this.position , this.duration, this.position / this.duration);
-    }
+  /**
+   * Callback for SC.get
+   *
+   * The callback receives a track object resolved from the track URL.
+   */
+  function getSound(track) {
+    var deferred = Q.defer();
 
-    /**
-     * Callback for SC.stream
-     *
-     * Receives a sound object on which you can call functions like `play()`, `stop()` and `pause()`.
-     */
-    function streamSound(sound) {
-      this.sound = global.sound = sound;
-    }
+    this.waveformUrl = track.waveform_url;
+
+    console.info(track.waveform_url);
+
+    SC.stream('/tracks/' + track.id, { whilePlaying: this.whilePlaying.bind(this) }, function getSoundCb(sound, err) {
+      if (err) {
+        deferred.reject(new Error(err));
+      } else {
+        deferred.resolve(sound);
+      }
+    });
+
+    return deferred.promise;
+  }
+
+  /**
+   * Callback for the whileplaying method.
+   */
+  function whilePlaying() {
+    // Remove loading ani if present.
+    console.log(this.position , this.duration, this.position / this.duration);
   }
 }
