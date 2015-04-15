@@ -37,6 +37,7 @@ function player() {
     this.on('sound.play', this.soundPlay);
     this.on('sound.stop', this.soundStop);
     this.on('sound.pause', this.soundPause);
+    this.on('sound.waveform', this.showWaveform);
 
     // Just for testing purposes;
     this.trigger('sound.play', { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
@@ -84,7 +85,7 @@ function player() {
      */
     SC.get('/resolve', { url: url }, function getTrackCb(track, err) {
       if (err) {
-        deferred.reject(new Error(err));
+        deferred.reject(new Error(err.message));
       } else {
         deferred.resolve(track);
       }
@@ -101,13 +102,11 @@ function player() {
   function getSound(track) {
     var deferred = Q.defer();
 
-    this.waveformUrl = track.waveform_url;
-
-    console.info(track.waveform_url);
+    this.trigger('sound.waveform', { waveformUrl: track.waveform_url });
 
     SC.stream('/tracks/' + track.id, { whilePlaying: this.whilePlaying.bind(this) }, function getSoundCb(sound, err) {
       if (err) {
-        deferred.reject(new Error(err));
+        deferred.reject(new Error(err.message));
       } else {
         deferred.resolve(sound);
       }
@@ -122,5 +121,14 @@ function player() {
   function whilePlaying() {
     // Remove loading ani if present.
     console.log(this.position , this.duration, this.position / this.duration);
+  }
+
+  /**
+   * Show add the sound waveform to the UI.
+   */
+  function showWaveform(waveformUrl) {
+    this.waveformUrl = waveformUrl;
+    
+    console.info(waveformUrl);
   }
 }
