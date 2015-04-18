@@ -3,7 +3,7 @@ var routeInstalled = false;
 var currentStateFallback = {};
 var routeRegExps = {};
 var stateCounter = 0;
-var settings = require('./with_route-settings')();
+var settings = require('./with_route_settings')();
 
 module.exports = withRoute;
 

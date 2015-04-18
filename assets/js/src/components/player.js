@@ -1,4 +1,9 @@
-/* global SC */
+/**
+ * SoundCloud API
+ * It was requested in main.js and is available globally now.
+ *
+ * global SC
+ */
 
 var flight = require('flightjs');
 var Q = require('q');
@@ -7,7 +12,8 @@ module.exports = flight.component(player);
 
 function player() {
   var defaultAttrs = {
-    clientId: null
+    clientId: null,
+    defaultTrackUrl: 'https://soundcloud.com/agentlexie/irule'
   };
 
   this.attributes(defaultAttrs);
@@ -21,6 +27,7 @@ function player() {
   this.soundPlay = soundPlay;
   this.soundStop = soundStop;
   this.soundPause = soundPause;
+  this.showWaveform = showWaveform;
   this.waveformUrl = undefined;
 
   //////
@@ -40,7 +47,7 @@ function player() {
     this.on('sound.waveform', this.showWaveform);
 
     // Just for testing purposes;
-    this.trigger('sound.play', { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
+    // this.trigger('sound.play', { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
   }
 
   /**
@@ -101,16 +108,17 @@ function player() {
    */
   function getSound(track) {
     var deferred = Q.defer();
+    var whilePlaying = { whilePlaying: this.whilePlaying.bind(this) };
 
-    this.trigger('sound.waveform', { waveformUrl: track.waveform_url });
-
-    SC.stream('/tracks/' + track.id, { whilePlaying: this.whilePlaying.bind(this) }, function getSoundCb(sound, err) {
+    SC.stream('/tracks/' + track.id, whilePlaying, function getSoundCb(sound, err) {
       if (err) {
         deferred.reject(new Error(err.message));
       } else {
         deferred.resolve(sound);
       }
     });
+
+    this.trigger('sound.waveform', { waveformUrl: track.waveform_url });
 
     return deferred.promise;
   }
@@ -125,10 +133,14 @@ function player() {
 
   /**
    * Show add the sound waveform to the UI.
+   *
+   * @param {event:sound.waveform} e - A FlightJS event object.
+   * @param {object} data - The event data.
+   * @listens event:sound.waveform
    */
-  function showWaveform(waveformUrl) {
-    this.waveformUrl = waveformUrl;
-    
-    console.info(waveformUrl);
+  function showWaveform(e, data) {
+    this.waveformUrl = data.waveformUrl;
+
+    console.info(this.waveformUrl);
   }
 }
