@@ -21,6 +21,13 @@
   background-color: black;
 }
 
-.player-controls {
+.player-play-button {}
 
+.player-play,
+.player-pause {
+  cursor: pointer;
+
+  &.hide {
+    display: none;
+  }
 }

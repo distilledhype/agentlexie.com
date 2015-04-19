@@ -20,17 +20,21 @@ var Navigation = require('./components/navigation');
 var Pages = require('./components/pages');
 var Routing = require('./components/routing');
 var NProgress = require('./components/nprogress');
+
+// Player components.
 var Player = require('./components/player');
-
-module.exports = { kickoff: kickoff };
-module.exports.kickoff();
-
-///
+var PlayerPlayButton = require('./components/player-play-button');
 
 function kickoff() {
   Navigation.attachTo('nav');
   Pages.attachTo('.pages');
   Routing.attachTo(document.body);
   NProgress.attachTo(document.body);
+
+  // Add player components.
   Player.attachTo('.player', { clientId: '5656ba27f714e54289054c57fcc2d319' });
+  PlayerPlayButton.attachTo('.player-play-button');
 }
+
+module.exports = { kickoff: kickoff };
+module.exports.kickoff();

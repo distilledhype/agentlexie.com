@@ -32,7 +32,6 @@ function player() {
   this.soundStop = soundStop;
   this.soundPause = soundPause;
   this.sound = undefined;
-  this.waveformUrl = undefined;
 
   //////
 
@@ -57,19 +56,25 @@ function player() {
    * Play a SoundCloud sound.
    */
   function soundPlay(e, data) {
-    this.getTrack(data.trackUrl)
-    .then(this.getSound.bind(this))
-    .then(function(sound) {
-
-      if (this.sound) {
-        this.sound.stop();
-      }
-
-      this.sound = global.sound = sound;
+    if (this.sound && !data.trackUrl) {
       this.sound.play();
+    } else {
+      var trackUrl = data.trackUrl || this.attr.defaultTrackUrl;
 
-    }.bind(this))
-    .done();
+      this.getTrack(trackUrl)
+      .then(this.getSound.bind(this))
+      .then(function(sound) {
+
+        if (this.sound) {
+          this.sound.stop();
+        }
+
+        this.sound = global.sound = sound;
+        this.sound.play();
+
+      }.bind(this))
+      .done();
+    }
   }
 
   /**
