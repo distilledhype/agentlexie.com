@@ -1,10 +1,13 @@
-/**
- * SoundCloud API
- * It was requested in main.js and is available globally now.
- *
- * global SC
- */
+// jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 
+/**
+ * flight-soundcloud
+ *
+ * This flight component makes use of the SoundCloud SDK
+ * which is provided via the global variable SC.
+ * The SDK script needs to be included and can be found
+ * here: http://connect.soundcloud.com/sdk.js
+ */
 var flight = require('flightjs');
 var Q = require('q');
 
@@ -18,16 +21,17 @@ function player() {
 
   this.attributes(defaultAttrs);
   this.after('initialize', afterInit);
+
   // SoundCloud functions.
   this.getTrack = getTrack;
   this.getSound = getSound;
   this.whilePlaying = whilePlaying;
+
   // Interact with sounds.
-  this.sound = undefined;
   this.soundPlay = soundPlay;
   this.soundStop = soundStop;
   this.soundPause = soundPause;
-  this.showWaveform = showWaveform;
+  this.sound = undefined;
   this.waveformUrl = undefined;
 
   //////
@@ -44,7 +48,6 @@ function player() {
     this.on('sound.play', this.soundPlay);
     this.on('sound.stop', this.soundStop);
     this.on('sound.pause', this.soundPause);
-    this.on('sound.waveform', this.showWaveform);
 
     // Just for testing purposes;
     // this.trigger('sound.play', { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
@@ -57,8 +60,14 @@ function player() {
     this.getTrack(data.trackUrl)
     .then(this.getSound.bind(this))
     .then(function(sound) {
+
+      if (this.sound) {
+        this.sound.stop();
+      }
+
       this.sound = global.sound = sound;
       this.sound.play();
+
     }.bind(this))
     .done();
   }
@@ -108,17 +117,23 @@ function player() {
    */
   function getSound(track) {
     var deferred = Q.defer();
-    var whilePlaying = { whilePlaying: this.whilePlaying.bind(this) };
+    var wP = { whilePlaying: this.whilePlaying.bind(this) };
 
-    SC.stream('/tracks/' + track.id, whilePlaying, function getSoundCb(sound, err) {
+    /**
+     * Make the data of the current track available.
+     *
+     * In order to get the track data a flight component just
+     * has to subscribe to the 'sound.data' event.
+     */
+    this.trigger('sound.data', { soundData: track });
+
+    SC.stream('/tracks/' + track.id, wP, function getSoundCb(sound, err) {
       if (err) {
         deferred.reject(new Error(err.message));
       } else {
         deferred.resolve(sound);
       }
     });
-
-    this.trigger('sound.waveform', { waveformUrl: track.waveform_url });
 
     return deferred.promise;
   }
@@ -128,19 +143,6 @@ function player() {
    */
   function whilePlaying() {
     // Remove loading ani if present.
-    console.log(this.position , this.duration, this.position / this.duration);
-  }
-
-  /**
-   * Show add the sound waveform to the UI.
-   *
-   * @param {event:sound.waveform} e - A FlightJS event object.
-   * @param {object} data - The event data.
-   * @listens event:sound.waveform
-   */
-  function showWaveform(e, data) {
-    this.waveformUrl = data.waveformUrl;
-
-    console.info(this.waveformUrl);
+    console.log(this.position, this.duration, this.position / this.duration);
   }
 }
