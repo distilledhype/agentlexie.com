@@ -22,56 +22,49 @@ function player() {
   this.attributes(defaultAttrs);
   this.after('initialize', afterInit);
 
-  // SoundCloud functions.
+  // Functions using the SoundCloud API.
   this.getTrack = getTrack;
   this.getSound = getSound;
   this.whilePlaying = whilePlaying;
 
-  // Interact with sounds.
+  // Functions interacting with the returned sound object.
   this.soundPlay = soundPlay;
   this.soundStop = soundStop;
   this.soundPause = soundPause;
   this.sound = undefined;
 
-  //////
-
   function afterInit() {
-    /**
-     * Initialize SoundCloud SDK
-     */
+    // Initialize SoundCloud SDK
     SC.initialize({ client_id: this.attr.clientId });
 
-    /**
-     * Listen to sound events
-     */
+    // Listen to sound events
     this.on('sound.play', this.soundPlay);
     this.on('sound.stop', this.soundStop);
     this.on('sound.pause', this.soundPause);
-
-    // Just for testing purposes;
-    // this.trigger('sound.play', { trackUrl: 'https://soundcloud.com/majorlazer/major-lazer-roll-the-bass' });
   }
 
   /**
    * Play a SoundCloud sound.
    */
   function soundPlay(e, data) {
-    if (this.sound && !data.trackUrl) {
+    var currentlyPlaying = this.$node.data('currently-playing');
+
+    if (this.sound && data.trackUrl === currentlyPlaying) {
       this.sound.play();
     } else {
       var trackUrl = data.trackUrl || this.attr.defaultTrackUrl;
 
+      this.$node.data('currently-playing', trackUrl);
+
       this.getTrack(trackUrl)
       .then(this.getSound.bind(this))
       .then(function(sound) {
-
         if (this.sound) {
           this.sound.stop();
         }
 
         this.sound = global.sound = sound;
         this.sound.play();
-
       }.bind(this))
       .done();
     }
@@ -101,9 +94,7 @@ function player() {
   function getTrack(url) {
     var deferred = Q.defer();
 
-    /**
-     * Get track object from track URL
-     */
+    // Get track object from track URL
     SC.get('/resolve', { url: url }, function getTrackCb(track, err) {
       if (err) {
         deferred.reject(new Error(err.message));
@@ -124,12 +115,9 @@ function player() {
     var deferred = Q.defer();
     var wP = { whilePlaying: this.whilePlaying.bind(this) };
 
-    /**
-     * Make the data of the current track available.
-     *
-     * In order to get the track data a flight component just
-     * has to subscribe to the 'sound.data' event.
-     */
+    // Make the data of the current track available.
+    // In order to get the track data a flight component just
+    // has to subscribe to the 'sound.data' event.
     this.trigger('sound.data', { soundData: track });
 
     SC.stream('/tracks/' + track.id, wP, function getSoundCb(sound, err) {
