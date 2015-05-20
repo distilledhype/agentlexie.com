@@ -30,10 +30,12 @@
     "live-reload": "^0.2.0",
     "lodash": "^3.1.0",
     "nprogress": "^0.1.6",
+    "opener": "^1.4.1",
     "properjs-pushstate": "^0.1.1",
     "q": "^1.2.0",
     "uglify-js": "^2.4.16",
-    "velocity-animate": "^1.2.1"
+    "velocity-animate": "^1.2.1",
+    "watchify": "^3.2.1"
   },
   "dependencies": {
     "jquery": "^2.1.3"
